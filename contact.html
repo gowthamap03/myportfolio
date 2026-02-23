@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
 <header>
   <h1>My Portfolio</h1>
   <nav>
@@ -18,22 +17,56 @@
     <a href="contact.html">Contact</a>
   </nav>
 </header>
-
 <section class="contact">
   <h3>Contact Me</h3>
-  <form>
-    <input type="text" placeholder="Your Name" required>
-    <input type="email" placeholder="Your Email" required>
-    <textarea rows="5" placeholder="Your Message"></textarea>
+  <form id="contact-form">
+    <input type="text" name="user_name" placeholder="Your Name" required>
+    <input type="email" name="user_email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <input type="hidden" name="to_email" value="gowthamap4@gmail.com">
     <center>
-    <button class="btn">Send</button>
+      <button class="btn" type="submit">Send</button>
     </center>
   </form>
 </section>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  (function(){
+    if (window.emailjs) {
+      emailjs.init('RnNQMievn0r2WTWk1'); 
+    }
+  })();
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('contact-form');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      var oldText = btn.textContent;
+      btn.textContent = 'Sending...';
+      emailjs.sendForm('service_hpalpgk', 'template_qn0wafd', form)
+        .then(function () {
+          alert('Message sent — thank you!');
+          form.reset();
+          btn.disabled = false;
+          btn.textContent = oldText;
+        }, function (err) {
+          console.error('EmailJS error:', err);
+          alert('Failed to send message. Please try again later.');
+          btn.disabled = false;
+          btn.textContent = oldText;
+            var to = 'gowthamap4@gmail.com';
+            var subject = 'Website message from ' + (form.user_name.value || 'Website');
+            var body = 'Name: ' + (form.user_name.value || '') + '\nEmail: ' + (form.user_email.value || '') + '\n\n' + (form.message.value || '');
+            var mailto = 'mailto:' + encodeURIComponent(to) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            window.location.href = mailto;
+        });
+    });
+  });
+</script>
 <footer>
-   © THANKS FOR VISITING MY PAGE....!🤍
+   © 2026 THANKS FOR VISITING MY PAGE....!🤍
 </footer>
 </body>
 </html>
-
-
