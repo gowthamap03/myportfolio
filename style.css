@@ -3,6 +3,9 @@
   font-family: Arial, sans-serif;
 }
 body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
   background: #0f172a;
   color: white;
 }
